@@ -8,6 +8,7 @@ public class FollowPlayer : MonoBehaviour
     private Transform player;
 
     public float speed;
+    public float distance_kept;
 
     // Start is called before the first frame update
     void Start()
@@ -18,6 +19,9 @@ public class FollowPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = Vector2.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
+        if (Vector2.Distance(transform.position, player.position) > distance_kept)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
+        }
     }
 }

@@ -14,5 +14,6 @@ public class KinematicFlee : MonoBehaviour {
 	void Update () 
 	{
 		// TODO 6: To create flee just switch the direction to go
+
 	}
 }

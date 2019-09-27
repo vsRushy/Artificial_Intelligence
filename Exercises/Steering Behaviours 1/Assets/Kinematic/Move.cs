@@ -36,7 +36,7 @@ public class Move : MonoBehaviour {
         arrow.value = mov_velocity.magnitude * 4.0f;
 
         // TODO 5: update tank position based on final mov_velocity and deltatime
-        //mov_velocity.y = 0.0f;
+        // mov_velocity.y = 0.0f;
         transform.position += mov_velocity * Time.deltaTime;
 
         // Reset movement to 0 to simplify things ...

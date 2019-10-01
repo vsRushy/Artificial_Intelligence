@@ -17,7 +17,7 @@ public class SteeringArrive : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		    Steer(move.target.transform.position);
+		Steer(move.target.transform.position);
 	}
 
 	public void Steer(Vector3 target)
@@ -30,6 +30,21 @@ public class SteeringArrive : MonoBehaviour {
         // Calculate the desired acceleration using the velocity we want to achieve and the one we already have
         // Use time_to_target as the time to transition from the current velocity to the desired velocity
         // Clamp the desired acceleration and call move.AccelerateMovement()
+        Vector3 current = move.movement;
+        Vector3 desired = move.target.transform.position - move.transform.position;
+        Vector3 accel = Vector3.zero;
+
+        if (desired.magnitude > min_distance)
+        {
+            accel = (desired - current) * Time.deltaTime;
+            Mathf.Clamp(accel.magnitude, -move.max_mov_acceleration, move.max_mov_acceleration);
+        }
+        else
+        {
+            move.SetMovementVelocity(Vector3.zero);
+        }
+
+        move.AccelerateMovement(accel);
 
         //TODO 4: Add a slow factor to reach the target
         // Start slowing down when we get closer to the target
@@ -38,7 +53,7 @@ public class SteeringArrive : MonoBehaviour {
 
     }
 
-	void OnDrawGizmosSelected() 
+	void OnDrawGizmosSelected()
 	{
 		// Display the explosion radius when selected
 		Gizmos.color = Color.white;

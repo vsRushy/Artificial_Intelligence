@@ -34,7 +34,14 @@ public class SteeringArrive : MonoBehaviour {
         Vector3 desired = move.target.transform.position - move.transform.position;
         Vector3 accel = Vector3.zero;
 
-        if (desired.magnitude > min_distance)
+        float slow_factor = 1.0f;
+
+        if(desired.magnitude <= slow_distance)
+        {
+            //desired = desired.normalized * move.max_mov_speed * slow_factor;
+        }
+
+        if (current.magnitude > min_distance)
         {
             accel = (desired - current) * Time.deltaTime;
             Mathf.Clamp(accel.magnitude, -move.max_mov_acceleration, move.max_mov_acceleration);
@@ -50,7 +57,6 @@ public class SteeringArrive : MonoBehaviour {
         // Start slowing down when we get closer to the target
         // Calculate a slow factor (0 to 1 multiplier to desired velocity)
         // Once inside the slow radius, the further we are from it, the slower we go
-
     }
 
 	void OnDrawGizmosSelected()

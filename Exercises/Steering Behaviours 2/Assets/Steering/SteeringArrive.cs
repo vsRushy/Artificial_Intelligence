@@ -30,33 +30,42 @@ public class SteeringArrive : MonoBehaviour {
         // Calculate the desired acceleration using the velocity we want to achieve and the one we already have
         // Use time_to_target as the time to transition from the current velocity to the desired velocity
         // Clamp the desired acceleration and call move.AccelerateMovement()
-        Vector3 current = move.movement;
-        Vector3 desired = move.target.transform.position - move.transform.position;
-        Vector3 accel = Vector3.zero;
-
-        float slow_factor = 1.0f;
-
-        if(desired.magnitude <= slow_distance)
-        {
-            //desired = desired.normalized * move.max_mov_speed * slow_factor;
-        }
-
-        if (current.magnitude > min_distance)
-        {
-            accel = (desired - current) * Time.deltaTime;
-            Mathf.Clamp(accel.magnitude, -move.max_mov_acceleration, move.max_mov_acceleration);
-        }
-        else
-        {
-            move.SetMovementVelocity(Vector3.zero);
-        }
-
-        move.AccelerateMovement(accel);
 
         //TODO 4: Add a slow factor to reach the target
         // Start slowing down when we get closer to the target
         // Calculate a slow factor (0 to 1 multiplier to desired velocity)
         // Once inside the slow radius, the further we are from it, the slower we go
+
+
+        Vector3 diff = target - transform.position;
+        float desired = 0.0f;
+
+        Vector3 desired_v = diff.normalized - move.movement;
+        Vector3 accel = desired_v - move.movement;
+
+        if(diff.magnitude < min_distance)
+        {
+            move.SetMovementVelocity(Vector3.zero);
+        }
+
+        if(desired <= slow_distance)
+        {
+            desired = move.max_mov_speed * diff.magnitude / slow_distance;
+        }
+        else if(desired > slow_distance)
+        {
+            desired = move.max_mov_speed;
+        }
+
+        accel /= time_to_accel;
+
+        if(accel.magnitude > move.max_mov_acceleration)
+        {
+            accel.Normalize();
+            accel *= move.max_mov_acceleration;
+        }
+
+        move.AccelerateMovement(accel);
     }
 
 	void OnDrawGizmosSelected()

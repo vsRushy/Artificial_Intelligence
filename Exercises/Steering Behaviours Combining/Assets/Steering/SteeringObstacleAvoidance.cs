@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SteeringObstacleAvoidance : MonoBehaviour {
+public class SteeringObstacleAvoidance : SteeringAbstract
+{
 
 	public LayerMask mask;
 	public float avoid_distance = 5.0f;

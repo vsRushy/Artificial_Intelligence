@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SteeringSeek : MonoBehaviour {
-
+public class SteeringSeek : SteeringAbstract
+{
 	Move move;
 
 	// Use this for initialization

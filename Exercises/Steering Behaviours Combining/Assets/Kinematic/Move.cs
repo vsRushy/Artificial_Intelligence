@@ -65,5 +65,8 @@ public class Move : MonoBehaviour
 
 		// finally move
 		transform.position += movement_vel * Time.deltaTime;
+
+        // Reset movement_velocity priorities vector
+        movement_velocity = null;
 	}
 }

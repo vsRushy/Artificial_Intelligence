@@ -2,7 +2,9 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class Move : MonoBehaviour {
+public class Move : MonoBehaviour
+{
+    Vector3[] movement_velocity = new Vector3[SteeringConf.num_priorities];
 
 	public GameObject target;
 	public GameObject aim;

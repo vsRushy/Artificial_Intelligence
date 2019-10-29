@@ -9,12 +9,14 @@ public class Detection : MonoBehaviour
     public float radius = 0.0f;
 
     public Camera camera;
+    Plane[] planes;
 
     // Start is called before the first frame update
     void Start()
     {
         colliders = Physics.OverlapSphere(transform.position, radius, mask);
         camera = GetComponent<Camera>();
+        planes = GeometryUtility.CalculateFrustumPlanes(camera);
     }
 
     // Update is called once per frame
@@ -24,9 +26,12 @@ public class Detection : MonoBehaviour
         for(uint i = 0; i < colliders.Length; i++)
         {
             if(colliders[i].gameObject.name == "Player")
-                Debug.Log("Collided with " + colliders[i].gameObject.ToString());
+            {
+                if (GeometryUtility.TestPlanesAABB(planes, colliders[i].bounds))
+                {
+                    Debug.Log("Collided with " + colliders[i].gameObject.ToString());
+                }
+            }
         }
-
-        //GeometryUtility.TestPlanesAABB();
     }
 }

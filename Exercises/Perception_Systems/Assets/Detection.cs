@@ -20,7 +20,8 @@ public class Detection : MonoBehaviour
         colliders = Physics.OverlapSphere(transform.position, radius, mask);
         for(uint i = 0; i < colliders.Length; i++)
         {
-            Debug.Log("Collided with " + colliders[i].gameObject);
+            if(colliders[i].gameObject.name == "Player")
+                Debug.Log("Collided with " + colliders[i].gameObject.ToString());
         }
     }
 }
